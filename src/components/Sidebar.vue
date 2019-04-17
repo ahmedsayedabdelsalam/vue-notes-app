@@ -1,22 +1,34 @@
 <template>
   <div class="sidebar">
-    <note/>
-    <note/>
-    <note/>
- 
-
-    <!-- <div class="siebar__content">
-      <a href="">Start new note</a>
-    </div> -->
+    <div v-if="notes.length">
+      <note v-for="(note, index) in notes" :key="index" :note="note" />
+    </div>
+    <div class="sidebar__content" v-else>
+      Boo, no notes. Get writing!
+    </div>
+    <div class="sidebar__content">
+      <a href="" @click.prevent="clearNote">Start a new note</a>
+    </div>
   </div>
 </template>
 
 <script>
 import Note from './Note'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     Note
+  },
+  computed: {
+    ...mapGetters([
+      'notes'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'clearNote'
+    ])
   }
 }
 </script>
@@ -31,12 +43,12 @@ export default {
     overflow-y: auto;
 
     &__content {
-        padding: 30px;
+      padding: 30px;
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+      a {
+          text-decoration: none;
+          color: inherit;
+      }
     }
  }
 </style>

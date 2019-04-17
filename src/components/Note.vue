@@ -1,18 +1,33 @@
 <template>
   <div class="note">
-    <a href="" class="note__delete">
+    <a href="" class="note__delete" @click.prevent="deleteNote(note)">
       <span class="note__delete-icon">&times;</span>
     </a>
     <div class="note__content">
-      <a href="" class="note__title">One</a>
-      <p class="note__body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad veniam quibusdam dolor temporibus odit, corrupti rem doloribus eligendi laudantium sequi animi excepturi. Ullam explicabo ipsam quisquam possimus dolor, officiis ea?</p>
+      <a href="" class="note__title" v-on:click.prevent="openNote(note)">
+        <span v-if="note.title">{{ note.title }}</span>
+        <span v-else>Untitled Note</span>
+      </a>
+      <p class="note__body">
+        <span v-if="note.body">{{ note.body }}</span>
+        <span v-else><em>Empty</em></span>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-    
+  props: [
+    'note'
+  ],
+  methods: {
+    ...mapActions([
+      'openNote',
+      'deleteNote'
+    ])
+  }
 }
 </script>
 
